@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Quicksand:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/05ba016b75.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+    <title>TODO LIST</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="input-container">
+        <form action="" id="onSubmit" class="form-container">
+          <div class="field-container">
+            <!-- EVENT: Inputs -->
+            <div class="todo-deadline-input-container">
+              <div class="todo-input-container">
+                <label for="txt_todoName">Task Title</label>
+                <input type="text" id="txt_todoName" />
+              </div>
+              <div class="deadline-container">
+                <label for="">Todo Deadline</label>
+                <input type="date" id="txt_deadline" />
+              </div>
+              <div class="priority-container">
+                <label for="">Priority</label>
+                <select name="" id="cbo_priority">
+                  <option value="" selected disabled>Set Priority</option>
+                  <option value="3">High Priority</option>
+                  <option value="2">Medium Priority</option>
+                  <option value="1">Low Priority</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- EVENT: Clicks -->
+            <div class="tag-priority-container">
+              <label for="">Todo Tags</label>
+              <div class="tag-priority-input-container">
+                <input type="text" id="txt_tagname" />
+                <button type="button" id="btn_add">Add</button>
+              </div>
+
+              <div class="tag-container">
+                <!-- <span class="tag-placeholder"
+                  ><label for="" class="tagging-name" data-key="1">sports</label
+                  ><button type="button" class="tagging-close">
+                    <i class="fa-solid fa-plus"></i></button
+                ></span>
+                <span class="tag-placeholder"
+                  ><label for="" class="tagging-name" data-key="2"
+                    >cooking</label
+                  ><button type="button" class="tagging-close">
+                    <i class="fa-solid fa-plus"></i></button
+                ></span>
+                <span class="tag-placeholder"
+                  ><label for="" class="tagging-name" data-key="3">gaming</label
+                  ><button type="button" class="tagging-close">
+                    <i class="fa-solid fa-plus"></i></button
+                ></span>
+                <span class="tag-placeholder"
+                  ><label for="" class="tagging-name" data-key="4"
+                    >swimming</label
+                  ><button type="button" class="tagging-close">
+                    <i class="fa-solid fa-plus"></i></button
+                ></span>
+                <span class="tag-placeholder"
+                  ><label for="" class="tagging-name" data-key="5"
+                    >reading</label
+                  ><button type="button" class="tagging-close">
+                    <i class="fa-solid fa-plus"></i></button
+                ></span> -->
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" id="btn_submit">Add Task</button>
+        </form>
+      </div>
+
+      <div class="todo-container"></div>
+    </div>
+  </body>
+</html>
