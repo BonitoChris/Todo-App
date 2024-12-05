@@ -51,41 +51,30 @@
                 <button type="button" id="btn_add">Add</button>
               </div>
 
-              <div class="tag-container">
-                <!-- <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="1">sports</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span>
-                <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="2"
-                    >cooking</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span>
-                <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="3">gaming</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span>
-                <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="4"
-                    >swimming</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span>
-                <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="5"
-                    >reading</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span> -->
-              </div>
+              <div class="tag-container"></div>
             </div>
           </div>
 
           <button type="submit" id="btn_submit">Add Task</button>
         </form>
+      </div>
+      <div class="filter-container">
+        <input type="date" id="txt_deadline" />
+
+        <select name="" id="cbo_priority">
+          <option value="" selected disabled>Select a Priority</option>
+          <option value="3">High Priority</option>
+          <option value="2">Medium Priority</option>
+          <option value="1">Low Priority</option>
+        </select>
+
+        <!-- NOTE: Items are added from local storage -->
+        <select name="" id="cbo_priority">
+          <option value="" selected disabled>Select a Tag</option>
+          <option value="3">High Priority</option>
+          <option value="2">Medium Priority</option>
+          <option value="1">Low Priority</option>
+        </select>
       </div>
 
       <div class="todo-container"></div>
