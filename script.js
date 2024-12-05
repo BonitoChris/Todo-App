@@ -1,6 +1,7 @@
 const todoApp = (function () {
   let objTodo = createTodoObj();
   let objTodoList = [];
+  let objTodoTags = [];
   let keyCount = 0;
   let keyCountTags = 0;
   // Factory Function
@@ -10,6 +11,13 @@ const todoApp = (function () {
       todoDeadline: "",
       todoPriority: "",
       todoTags: [],
+    };
+  }
+
+  function createTodoTags(tagKey, tagName) {
+    return {
+      tagKey,
+      tagName,
     };
   }
 
@@ -78,13 +86,32 @@ const todoApp = (function () {
       alert("Only 3 - 4 Tags");
     }
   }
+  // This function invoke when the submit button is press
+  // This function resets all tags that was selected
+  function resetRotation(tagContainer) {
+    let collectionOfTaggingCloseButton =
+      tagContainer.querySelectorAll(".tagging-close");
 
-  function saveToLocalStorage() {
-    localStorage.setItem("todoList", JSON.stringify(objTodoList));
+    collectionOfTaggingCloseButton.forEach((element) => {
+      let i = element.querySelector("i");
+      if (i.classList.contains("rotated")) {
+        i.classList.toggle("rotated");
+      }
+    });
   }
 
-  function loadFromLocalStorage(grandparent) {
+  // Local Storage Section
+  function saveToLocalStorage(task) {
+    if (task) {
+      localStorage.setItem("todoList", JSON.stringify(objTodoList));
+    } else {
+      localStorage.setItem("todoTags", JSON.stringify(objTodoTags));
+    }
+  }
+
+  function loadFromLocalStorage(grandparent, grandParentTag) {
     const savedTodos = localStorage.getItem("todoList");
+    const savedTags = localStorage.getItem("todoTags");
     if (savedTodos) {
       objTodoList = JSON.parse(savedTodos);
       let sorted = objTodoList.sort(
@@ -106,6 +133,50 @@ const todoApp = (function () {
       keyCount = objTodoList.length
         ? objTodoList[objTodoList.length - 1].key
         : 0;
+    }
+    if (savedTags) {
+      objTagList = JSON.parse(savedTags);
+
+      objTagList.forEach((tag) => {
+        grandParentTag.appendChild(elementCreationTag(tag.tagKey, tag.tagName));
+      });
+    }
+  }
+
+  // Helper Function Section
+  function onCheckChangeTaskPlaceholderDOM(
+    ifChecked,
+    placeholder,
+    edit,
+    del,
+    label
+  ) {
+    if (ifChecked) {
+      placeholder.style.backgroundColor = "#83A6CE";
+      edit.style.backgroundColor = "#26415E";
+      edit.style.color = "#83A6CE";
+      del.style.backgroundColor = "#26415E";
+      del.style.color = "#83A6CE";
+      label.style.color = "#26415E";
+    } else {
+      placeholder.style.backgroundColor = "#0b1b32";
+      edit.style.backgroundColor = "#e5c9d7";
+      edit.style.color = "#0b1b32";
+      del.style.backgroundColor = "#e5c9d7";
+      del.style.color = "#0b1b32";
+      label.style.color = "#e5c9d7";
+    }
+  }
+
+  function borderStyleColorSet(todoPriority, divPlaceholder) {
+    // Setting up Background-Color depending on what priority of the task is
+    // NOTE: Change this into a helper function
+    if (todoPriority == 1) {
+      divPlaceholder.style.border = "5px solid #0865fe";
+    } else if (todoPriority == 2) {
+      divPlaceholder.style.border = "5px solid #ef9e56";
+    } else if (todoPriority == 3) {
+      divPlaceholder.style.border = "5px solid #3fc495";
     }
   }
 
@@ -169,7 +240,7 @@ const todoApp = (function () {
         });
         if (!isInserted) {
           console.log("Loop Not Triggered");
-          console.log(getObj);
+          // console.log(getObj);
           grandparent.appendChild(
             elementCreation(
               tempObject.todoName,
@@ -185,7 +256,7 @@ const todoApp = (function () {
         // Invoke this function to reset the Rotation of Tags
         resetRotation(tagContainerSrc);
         // Invoke this function to store the tasks on local storage
-        saveToLocalStorage();
+        saveToLocalStorage(true);
 
         // Resetting Field Sections
         inputField.value = "";
@@ -209,30 +280,6 @@ const todoApp = (function () {
     } else {
       objTodoList[index].status = "Not Done";
       saveToLocalStorage();
-    }
-  }
-
-  function onCheckChangeTaskPlaceholderDOM(
-    ifChecked,
-    placeholder,
-    edit,
-    del,
-    label
-  ) {
-    if (ifChecked) {
-      placeholder.style.backgroundColor = "#83A6CE";
-      edit.style.backgroundColor = "#26415E";
-      edit.style.color = "#83A6CE";
-      del.style.backgroundColor = "#26415E";
-      del.style.color = "#83A6CE";
-      label.style.color = "#26415E";
-    } else {
-      placeholder.style.backgroundColor = "#0b1b32";
-      edit.style.backgroundColor = "#e5c9d7";
-      edit.style.color = "#0b1b32";
-      del.style.backgroundColor = "#e5c9d7";
-      del.style.color = "#0b1b32";
-      label.style.color = "#e5c9d7";
     }
   }
 
@@ -318,7 +365,7 @@ const todoApp = (function () {
       let findIndex = objTodoList.findIndex((obj) => obj.key == key);
       console.log(childElemValue);
       objTodoList[findIndex].todoName = childElemValue;
-      saveToLocalStorage();
+      saveToLocalStorage(true);
     } catch (e) {
       console.error(e);
     }
@@ -333,9 +380,24 @@ const todoApp = (function () {
     saveToLocalStorage();
   }
 
-  // ELEMENT CREATION | SECTION
-  function elementCreationTag(key, inputFieldVal, grandparent) {
+  // ELEMENT CREATION | STORING ELEMENT ATTRIBS | TAGS
+  function storeTagContents(
+    key,
+    inputField,
+    callbackElementCreationTag,
+    grandParentTag
+  ) {
+    let tempObject = new createTodoTags(key, inputField);
+
+    objTodoTags.push(tempObject);
+
+    saveToLocalStorage(false);
+    grandParentTag.appendChild(callbackElementCreationTag(key, inputField));
+  }
+
+  function elementCreationTag(key, inputFieldVal) {
     // Initialization of Elements
+
     let span = document.createElement("span");
     let i = document.createElement("i");
     let button = document.createElement("button");
@@ -362,8 +424,9 @@ const todoApp = (function () {
     button.appendChild(i);
     span.appendChild(label);
     span.appendChild(button);
-    grandparent.appendChild(span);
+    return span;
   }
+
   // ELEMENT CREATION | TASK
   function elementCreation(
     elemName,
@@ -380,15 +443,6 @@ const todoApp = (function () {
     let div_upperContainer = document.createElement("div");
     div_upperContainer.classList.add("upper-container");
 
-    // Setting up Background-Color depending on what priority of the task is
-    if (todoPriority == 1) {
-      div_placeholder.style.backgroundColor = "#0865fe";
-    } else if (todoPriority == 2) {
-      div_placeholder.style.backgroundColor = "#ef9e56";
-    } else if (todoPriority == 3) {
-      div_placeholder.style.backgroundColor = "#b0192a";
-    }
-
     // DIV Start | lower-container ---
     let div_lowerContainer = document.createElement("div");
     div_lowerContainer.classList.add("lower-container");
@@ -399,6 +453,8 @@ const todoApp = (function () {
     let div_taskDeadlineContainer = document.createElement("div");
     div_taskDeadlineContainer.classList.add("task-deadline-container");
     // DIV End Initialization ---
+
+    borderStyleColorSet(todoPriority, div_placeholder);
 
     // task-deadline-placeholder
     let label_taskDeadlinePlaceholder = document.createElement("label");
@@ -477,18 +533,6 @@ const todoApp = (function () {
     //End Initialization of Elements
   }
 
-  function resetRotation(tagContainer) {
-    let collectionOfTaggingCloseButton =
-      tagContainer.querySelectorAll(".tagging-close");
-
-    collectionOfTaggingCloseButton.forEach((element) => {
-      let i = element.querySelector("i");
-      if (i.classList.contains("rotated")) {
-        i.classList.toggle("rotated");
-      }
-    });
-  }
-
   return {
     onInput,
     onSubmit,
@@ -498,16 +542,22 @@ const todoApp = (function () {
     onSave,
     onDelete,
     loadFromLocalStorage,
-    elementCreationTag,
     onToggleTag,
     onRotate,
     keyCountTags,
+    storeTagContents,
   };
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
   // Variable Declarations
   let cboPriority = document.getElementById("cbo_priority");
+
+  // Div Containers
+  let tagContainer = document.querySelector(".tag-container");
+  let todoGrandParentContainer = document.querySelector(".todo-container");
+  // Load Elements once the DOMContentLoaded is finish rendering
+  todoApp.loadFromLocalStorage(todoGrandParentContainer, tagContainer);
 
   // Todo Name | Deadline | Event Delegation
   document
@@ -533,8 +583,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Tags
 
   // Placeholder | Event Delegation
-  let todoGrandParentContainer = document.querySelector(".todo-container");
-  todoApp.loadFromLocalStorage(todoGrandParentContainer);
+
   todoGrandParentContainer.addEventListener("click", function (e) {
     let target = e.target;
     const taskKey = target.dataset.key;
@@ -582,7 +631,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // TAG | TAG CONTAINER | SECTION -----
 
   // EVENT DELEGATION | TAG ---
-  let tagContainer = document.querySelector(".tag-container");
 
   tagContainer.addEventListener("click", function (e) {
     let element = e.target;
@@ -610,11 +658,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let txt_tagname = document.getElementById("txt_tagname");
     if (txt_tagname.value.length > 2) {
       todoApp.keyCountTags++;
-      todoApp.elementCreationTag(
-        todoApp.keyCountTags,
-        txt_tagname.value,
-        tagContainer
-      );
+      todoApp.storeTagContents(todoApp.keyCountTags, txt_tagname.value);
     } else {
       alert("Todo Tag is Empty or Insufficient String");
     }
