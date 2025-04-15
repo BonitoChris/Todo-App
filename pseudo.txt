@@ -1,0 +1,45 @@
+// SET event delegation for task-creation-container | change
+  // -> SET a useState for Date
+  // -> SET a useState for Priority
+  // -> SET a useState for Workspace
+
+  // -> IF element has id of deadline
+  // -> CALL setState
+  // -> IF element has ID of priority
+  // -> CALL setState
+  // -> IF element has ID of section
+  // -> CALL setState
+
+  // -> SET a useState for Workspace
+  // -> SET a useState for Workspace
+  // ->
+  // SET event listener for task Title
+  // -> CALL setState
+
+  // SET event listener for add BUTTON
+  // Ill be needing 2 Function
+  // Function 1 is for saving the task
+  // -> SET a Variable for the PARAMETERS
+  // -> SET a CLONE of ARRAY
+  // -> PUSH the VARIABLES to the CLONED ARRAY
+  // -> ASSIGN the CLONE of ARRAY to the ORIGINAL
+
+  // Function 2 is for creating the task | Return the Node task-placeholder
+  // Ancestor ---
+  // SET a variable for task-placeholder CREATION
+  // Parent ---
+  // SET a variable for left-task-container CREATION
+  // SET a variable for right-task-container CREATION
+  // Children ---
+  // SET a variable for I(circle) CREATION
+  // SET a variable for task-checkbox CREATION
+  // SET a variable for P CREATION
+  // Children ---
+  // SET a variable for I(date) CREATION | add TITLE ATTRIBUTE
+  // SET a variable for SPAN(status-container) CREATION
+  // SET a variable for I(priority)
+
+  // APPEND left and right container 
+  // APPEND i, checkbox, p nodes to left container
+  // APPEND i, span, i nodes to the right container
+  // RETURN ANCESTOR node
