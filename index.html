@@ -19,76 +19,90 @@
   </head>
   <body>
     <div class="container">
-      <div class="input-container">
-        <form action="" id="onSubmit" class="form-container">
-          <div class="field-container">
+      <div class="left-container">
+        <div class="input-container">
+          <form action="" id="onSubmit" class="form-container">
             <!-- EVENT: Inputs -->
-            <div class="todo-deadline-input-container">
-              <div class="todo-input-container">
-                <label for="txt_todoName">Task Title</label>
-                <input type="text" id="txt_todoName" />
-              </div>
-              <div class="deadline-container">
-                <label for="">Todo Deadline</label>
-                <input type="date" id="txt_deadline" />
-              </div>
-              <div class="priority-container">
-                <label for="">Priority</label>
-                <select name="" id="cbo_priority">
-                  <option value="" selected disabled>Set Priority</option>
-                  <option value="3">High Priority</option>
-                  <option value="2">Medium Priority</option>
-                  <option value="1">Low Priority</option>
-                </select>
+            <div class="task-creation-container">
+              <input
+                type="text"
+                id="txt_todoName"
+                class="field title"
+                required
+              />
+              <label for="txt_todoName" class="field labelTitle"
+                >Task Title</label
+              >
+              <div class="bottom-input-container">
+                <div class="priority-deadline-container">
+                  <input
+                    type="date"
+                    id="txt_deadline"
+                    class="field deadline"
+                    required
+                  />
+
+                  <select
+                    name=""
+                    id="cbo_priority"
+                    class="field priority"
+                    required
+                  >
+                    <option value="" selected disabled>Set Priority</option>
+                    <option value="3">High Priority</option>
+                    <option value="2">Medium Priority</option>
+                    <option value="1">Low Priority</option>
+                  </select>
+                  <select name="" id="cbo_section" class="field section">
+                    <option value="" selected disabled>Workspace</option>
+                  </select>
+                </div>
+                <button type="submit" id="btn_submit" class="field submit">
+                  Add Task
+                </button>
               </div>
             </div>
-
-            <!-- EVENT: Clicks -->
-            <div class="tag-priority-container">
-              <label for="">Todo Tags</label>
-              <div class="tag-priority-input-container">
-                <input type="text" id="txt_tagname" />
-                <button type="button" id="btn_add">Add</button>
-              </div>
-
-              <div class="tag-container">
-                <!-- <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="1">sports</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span>
-                <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="2"
-                    >cooking</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span>
-                <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="3">gaming</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span>
-                <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="4"
-                    >swimming</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span>
-                <span class="tag-placeholder"
-                  ><label for="" class="tagging-name" data-key="5"
-                    >reading</label
-                  ><button type="button" class="tagging-close">
-                    <i class="fa-solid fa-plus"></i></button
-                ></span> -->
-              </div>
-            </div>
-          </div>
-
-          <button type="submit" id="btn_submit">Add Task</button>
-        </form>
+          </form>
+        </div>
       </div>
 
-      <div class="todo-container"></div>
+      <div class="right-container">
+        <!-- If theres no existing workspace add default -->
+        <div class="todo-header workspace">
+          <div class="text-container">
+            <h3>Workspace</h3>
+            <button class="field option-workspace" aria-label="More options">
+              <i class="fa-solid fa-ellipsis fa-xl"></i>
+            </button>
+          </div>
+          <hr />
+
+          <div class="task-container"></div>
+        </div>
+        <div class="todo-header">
+          <div class="text-container">
+            <h3>Create Workspace</h3>
+            <button class="field create-workspace">
+              <i
+                class="fa-solid fa-plus fa-lg"
+                style="pointer-events: none"
+              ></i>
+            </button>
+            <div class="button-container">
+              <button class="field save-workspace">Save</button>
+              <button class="field cancel-workspace">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tooltip-container">
+        <div class="tooltip-body">
+          <ul>
+            <li><i class="fa-solid fa-pen-to-square fa-lg"></i>Edit</li>
+            <li><i class="fa-solid fa-trash fa-lg"></i>Delete</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </body>
 </html>
